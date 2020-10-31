@@ -591,3 +591,62 @@ fn test_bitset_shr_capacity() {
     
     assert_eq!(result, expected);
 }
+
+#[test]
+fn test_bitset_and_assign() {
+    let bitset = BitSet::from_u64(0xDEAD_0000);
+    let mut result = BitSet::from_u64(0xFFFF_BEEF);
+    let expected = BitSet::from_u64(0xDEAD_0000);
+    result &= bitset;
+
+    assert_eq!(result, expected);
+}
+
+#[test]
+fn test_bitset_or_assign() {
+    let bitset = BitSet::from_u64(0x0000_BEEF);
+    let mut result = BitSet::from_u64(0xDEAD_0000);
+    let expected = BitSet::from_u64(0xDEAD_BEEF);
+    result |= bitset;
+
+    assert_eq!(result, expected);
+}
+
+#[test]
+fn test_bitset_xor_assign() {
+    let bitset = BitSet::from_u64(0x0000_BEEF);
+    let mut result = BitSet::from_u64(0xDEAD_0000);
+    let expected = BitSet::from_u64(0xDEAD_BEEF);
+    result ^= bitset;
+
+    assert_eq!(result, expected);
+}
+
+#[test]
+fn test_bitset_shl_assign() {
+    let mut bitset = BitSet::from_u64(0x0000_BEEF);
+
+    bitset <<= 4;
+    assert_eq!(bitset, BitSet::from_u64(0x000B_EEF0));
+    bitset <<= 4;
+    assert_eq!(bitset, BitSet::from_u64(0x00BE_EF00));
+    bitset <<= 4;
+    assert_eq!(bitset, BitSet::from_u64(0x0BEE_F000));
+    bitset <<= 4;
+    assert_eq!(bitset, BitSet::from_u64(0xBEEF_0000));
+}
+
+#[test]
+fn test_bitset_shr_assign() {
+    let mut bitset = BitSet::from_u64(0xDEAD_BEEF);
+
+    bitset >>= 4;
+    assert_eq!(bitset, BitSet::from_u64(0x0DEA_DBEE));
+    bitset >>= 4;
+    assert_eq!(bitset, BitSet::from_u64(0x00DE_ADBE));
+    bitset >>= 4;
+    assert_eq!(bitset, BitSet::from_u64(0x000D_EADB));
+    bitset >>= 4;
+    assert_eq!(bitset, BitSet::from_u64(0x0000_DEAD));
+}
+
