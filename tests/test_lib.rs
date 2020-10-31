@@ -370,7 +370,7 @@ fn test_bitset_set_and_get() {
 }
 
 #[test]
-fn test_bitwise_and_pointers_and_values() {
+fn test_bitset_bitwise_and_pointers_and_values() {
     let bitset1 = BitSet::from_u64(0xDEAD_BEEF_CAFE_BABE);
     let bitset2 = BitSet::from_u64(0xCAFE_BABE_DEAD_BEEF);
 
@@ -380,7 +380,7 @@ fn test_bitwise_and_pointers_and_values() {
 }
 
 #[test]
-fn test_bitwise_or_pointers_and_values() {
+fn test_bitset_bitwise_or_pointers_and_values() {
     let bitset1 = BitSet::from_u64(0xDEAD_BEEF_CAFE_BABE);
     let bitset2 = BitSet::from_u64(0xCAFE_BABE_DEAD_BEEF);
 
@@ -390,7 +390,7 @@ fn test_bitwise_or_pointers_and_values() {
 }
 
 #[test]
-fn test_bitwise_xor_pointers_and_values() {
+fn test_bitset_bitwise_xor_pointers_and_values() {
     let bitset1 = BitSet::from_u64(0xDEAD_BEEF_CAFE_BABE);
     let bitset2 = BitSet::from_u64(0xCAFE_BABE_DEAD_BEEF);
 
@@ -400,7 +400,7 @@ fn test_bitwise_xor_pointers_and_values() {
 }
 
 #[test]
-fn test_shl_pointers_and_values() {
+fn test_bitset_shl_pointers_and_values() {
     let bitset = BitSet::from_u64(0xDEAD_BEEF_CAFE_BABE);
 
     for i in 0..bitset.capacity() {
@@ -409,7 +409,7 @@ fn test_shl_pointers_and_values() {
 }
 
 #[test]
-fn test_shr_pointers_and_values() {
+fn test_bitset_shr_pointers_and_values() {
     let bitset = BitSet::from_u64(0xDEAD_BEEF_CAFE_BABE);
 
     for i in 0..bitset.capacity() {
@@ -418,14 +418,14 @@ fn test_shr_pointers_and_values() {
 }
 
 #[test]
-fn test_negation_pointers_and_values() {
+fn test_bitset_not_pointers_and_values() {
     let bitset = BitSet::from_u64(0xDEAD_BEEF_CAFE_BABE);
 
     assert_eq!(!bitset, !&bitset);
 }
 
 #[test]
-fn test_bitwise_and1() {
+fn test_bitset_bitwise_and1() {
     let bitset1 = BitSet::from_u64(0xDEAD_BEEF);
     let bitset2 = BitSet::from_u64(0xDEA0_0EEF);
     let expected = BitSet::from_u64(0xDEA0_0EEF);
@@ -435,7 +435,7 @@ fn test_bitwise_and1() {
 }
 
 #[test]
-fn test_bitwise_and2() {
+fn test_bitset_bitwise_and2() {
     let bitset1 = BitSet::from_u64(0xF0F0_FF0F);
     let bitset2 = BitSet::from_u64(0xFFFF_F0F0);
     let expected = BitSet::from_u64(0xF0F0_F000);
@@ -454,7 +454,7 @@ fn test_bitset_and_bitset_is_bitset() {
 }
 
 #[test]
-fn test_bitwise_or1() {
+fn test_bitset_bitwise_or1() {
     let bitset1 = BitSet::from_u64(0x0000_0000);
     let bitset2 = BitSet::from_u64(0x0000_BEEF);
     let expected = BitSet::from_u64(0x0000_BEEF);
@@ -464,7 +464,7 @@ fn test_bitwise_or1() {
 }
 
 #[test]
-fn test_bitwise_or2() {
+fn test_bitset_bitwise_or2() {
     let bitset1 = BitSet::from_u64(0xF0F0_FF0F);
     let bitset2 = BitSet::from_u64(0x000F_0000);
     let expected = BitSet::from_u64(0xF0FF_FF0F);
@@ -474,7 +474,7 @@ fn test_bitwise_or2() {
 }
 
 #[test]
-fn test_bitwise_or3() {
+fn test_bitset_bitwise_or3() {
     let bitset1 = BitSet::from_u64(0xDEAD_0000);
     let bitset2 = BitSet::from_u64(0x0000_BEEF);
     let expected = BitSet::from_u64(0xDEAD_BEEF);
@@ -493,7 +493,7 @@ fn test_bitset_or_bitset_is_bitset() {
 }
 
 #[test]
-fn test_bitwise_xor1() {
+fn test_bitset_bitwise_xor1() {
     let bitset1 = BitSet::from_u64(0xDEAD_0000);
     let bitset2 = BitSet::from_u64(0x0000_BEEF);
     let expected = BitSet::from_u64(0xDEAD_BEEF);
@@ -503,7 +503,7 @@ fn test_bitwise_xor1() {
 }
 
 #[test]
-fn test_bitwise_xor2() {
+fn test_bitset_bitwise_xor2() {
     let bitset1 = BitSet::from_u64(0xDEAD_BEEF);
     let bitset2 = BitSet::from_u64(0xCAFE_BABE);
     let expected = BitSet::from_u64(0x1453_0451);
