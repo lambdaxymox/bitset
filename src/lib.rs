@@ -282,7 +282,6 @@ impl BitSet {
         } else {
             None
         }
-        
     }
     
     /// Set all the bits in a bit set to `true` regardless of their current
@@ -303,6 +302,27 @@ impl BitSet {
     #[inline]
     pub fn set_all(&mut self) {
         self.data = 0xFFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_u128;
+    }
+
+    /// Set all the bits in a bit set to `false` regardless of their current
+    /// value.
+    ///
+    /// ## Example
+    ///
+    /// ```
+    /// # use bitset::{
+    /// #     BitSet, 
+    /// # };
+    /// #
+    /// let data = 0xDEAD_BEEF_DEAD_BEEF;
+    /// let mut bitset = BitSet::from_u64(data);
+    /// assert!(bitset.any());
+    /// bitset.reset_all();
+    /// assert!(bitset.none());
+    /// ```
+    #[inline]
+    pub fn reset_all(&mut self) {
+        self.data = 0;
     }
 
     /// Set the bit as position `position` to the value `value`.

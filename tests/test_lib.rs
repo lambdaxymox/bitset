@@ -75,3 +75,201 @@ fn test_bitset_test2() {
         assert_eq!(bitset.test(i), false);
     }
 }
+
+#[test]
+fn test_bitset_test_out_of_bounds() {
+    let data = 0xFFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF;
+    let bitset = BitSet::from_u128(data);
+
+    assert_eq!(bitset.test(bitset.capacity()), false);
+}
+
+#[test]
+fn test_bitset_count() {
+    let data = 0xFFFF_FF00;
+    let bitset = BitSet::from_u64(data);
+
+    assert_eq!(bitset.count(), 24);
+}
+
+#[test]
+fn test_bitset_count_all_zeros() {
+    let bitset = BitSet::new();
+
+    assert_eq!(bitset.count(), 0);
+}
+
+#[test]
+fn test_bitset_count_all_set() {
+    let mut bitset = BitSet::new();
+    bitset.set_all();
+
+    assert_eq!(bitset.count(), bitset.capacity());
+}
+
+#[test]
+fn test_bitset_all1() {
+    let bitset = BitSet::new();
+
+    assert!(!bitset.all());
+}
+
+#[test]
+fn test_bitset_all2() {
+    let data = 0xFFFF;
+    let bitset = BitSet::from_u64(data);
+
+    assert!(!bitset.all());
+}
+
+#[test]
+fn test_bitset_all3() {
+    let mut bitset = BitSet::new();
+    bitset.set_all();
+
+    assert!(bitset.all());
+}
+
+#[test]
+fn test_bitset_none1() {
+    let bitset = BitSet::new();
+
+    assert!(bitset.none());
+}
+
+#[test]
+fn test_bitset_none2() {
+    let data = 0xFFFF;
+    let bitset = BitSet::from_u64(data);
+
+    assert!(!bitset.none());
+}
+
+#[test]
+fn test_bitset_any1() {
+    let data = 0xF000;
+    let bitset = BitSet::from_u64(data);
+
+    assert!(bitset.any());
+}
+
+#[test]
+fn test_bitset_any2() {
+    let bitset = BitSet::new();
+
+    assert!(!bitset.any());
+}
+
+#[test]
+fn test_bitset_flip_all() {
+    let mut result = BitSet::from_u128(0xF0F0_F0F0_F0F0_F0F0_F0F0_F0F0_F0F0_F0F0);
+    let expected = BitSet::from_u128(0x0F0F_0F0F_0F0F_0F0F_0F0F_0F0F_0F0F_0F0F);
+    result.flip_all();
+
+    assert_eq!(result, expected);
+}
+
+/// Flipping all the bits twice in a row should return the bits to their
+/// values.
+#[test]
+fn test_bitset_flip_all_twice() {
+    let mut result = BitSet::from_u128(0xF0F0_F0F0_F0F0_F0F0_F0F0_F0F0_F0F0_F0F0);
+    let expected = result;
+    result.flip_all();
+    result.flip_all();
+
+    assert_eq!(result, expected);
+}
+
+#[test]
+fn test_bitset_flip() {
+    let expected = BitSet::from_u64(0x0F);
+    let mut result = BitSet::from_u64(0xF0);
+    result.flip(0);
+    result.flip(1);
+    result.flip(2);
+    result.flip(3);
+    result.flip(4);
+    result.flip(5);
+    result.flip(6);
+    result.flip(7);
+
+    assert_eq!(result, expected);
+}
+
+#[test]
+fn test_bitset_flip_bits_order_should_not_matter() {
+    let data = 0xF0;
+    let expected = BitSet::from_u64(0x0F);
+    let mut result1 = BitSet::from_u64(data);
+    result1.flip(0);
+    result1.flip(1);
+    result1.flip(2);
+    result1.flip(3);
+    result1.flip(4);
+    result1.flip(5);
+    result1.flip(6);
+    result1.flip(7);
+
+    let mut result2 = BitSet::from_u64(data);
+    result2.flip(3);
+    result2.flip(0);
+    result2.flip(2);
+    result2.flip(7);
+    result2.flip(4);
+    result2.flip(5);
+    result2.flip(6);
+    result2.flip(1);
+
+    assert_eq!(result1, expected);
+    assert_eq!(result2, expected);
+}
+
+/// Flipping a bit twice should return the bit to its original value.
+#[test]
+fn test_bitset_flip_twice_return_original_value() {
+    let data = 0b10;
+    let expected = BitSet::from_u64(data);
+    let mut result = BitSet::from_u64(data);
+    result.flip(1);
+    result.flip(1);
+
+    assert_eq!(result, expected);
+}
+
+#[test]
+fn test_bitset_set_all1() {
+    let mut bitset = BitSet::new();
+    assert!(bitset.none());
+
+    bitset.set_all();
+    assert!(bitset.all());
+}
+
+#[test]
+fn test_bitset_set_all2() {
+    let data = 0xDEAD_BEEF;
+    let mut bitset = BitSet::from_u64(data);
+    bitset.set_all();
+
+    assert!(bitset.all());
+}
+
+#[test]
+fn test_bitset_reset_all1() {
+    let data = 0;
+    let mut bitset = BitSet::from_u128(data);
+    assert!(bitset.none());
+
+    bitset.reset_all();
+    assert!(bitset.none());
+}
+
+#[test]
+fn test_bitset_reset_all2() {
+    let data = 0xDEAD_BEEF_DEAD_BEEF;
+    let mut bitset = BitSet::from_u64(data);
+    assert!(bitset.any());
+    bitset.reset_all();
+    assert!(bitset.none());
+}
