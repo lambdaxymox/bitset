@@ -521,3 +521,50 @@ fn test_bitset_xor_bitset_is_zero() {
 
     assert_eq!(result, expected);
 }
+
+#[test]
+fn test_bitset_shl1() {
+    let bitset = BitSet::from_u64(0b0000_0001);
+   
+    assert_eq!(bitset << 0, BitSet::from_u64(0b0000_0001));
+    assert_eq!(bitset << 1, BitSet::from_u64(0b0000_0010));
+    assert_eq!(bitset << 2, BitSet::from_u64(0b0000_0100));
+    assert_eq!(bitset << 3, BitSet::from_u64(0b0000_1000));
+    assert_eq!(bitset << 4, BitSet::from_u64(0b0001_0000));
+    assert_eq!(bitset << 5, BitSet::from_u64(0b0010_0000));
+    assert_eq!(bitset << 6, BitSet::from_u64(0b0100_0000));
+    assert_eq!(bitset << 7, BitSet::from_u64(0b1000_0000));
+}
+
+#[test]
+fn test_bitset_shl_capacity_minus_one() {
+    let bitset = BitSet::from_u128(0xFFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF);
+    let expected = BitSet::from_u64(0);
+    let result = (bitset << (bitset.capacity() - 1)) << 1;
+    
+    assert_eq!(result, expected);
+}
+
+#[test]
+fn test_bitset_shr1() {
+    let bitset = BitSet::from_u64(0b1000_0000);
+   
+    assert_eq!(bitset >> 0, BitSet::from_u64(0b1000_0000));
+    assert_eq!(bitset >> 1, BitSet::from_u64(0b0100_0000));
+    assert_eq!(bitset >> 2, BitSet::from_u64(0b0010_0000));
+    assert_eq!(bitset >> 3, BitSet::from_u64(0b0001_0000));
+    assert_eq!(bitset >> 4, BitSet::from_u64(0b0000_1000));
+    assert_eq!(bitset >> 5, BitSet::from_u64(0b0000_0100));
+    assert_eq!(bitset >> 6, BitSet::from_u64(0b0000_0010));
+    assert_eq!(bitset >> 7, BitSet::from_u64(0b0000_0001));
+    assert_eq!(bitset >> 8, BitSet::from_u64(0b0000_0000));
+}
+
+#[test]
+fn test_bitset_shr_capacity() {
+    let bitset = BitSet::from_u128(0xFFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF);
+    let expected = BitSet::from_u64(0);
+    let result = (bitset >> (bitset.capacity() - 1)) >> 1;
+    
+    assert_eq!(result, expected);
+}
