@@ -417,3 +417,10 @@ fn test_shr_pointers_and_values() {
     }
 }
 
+#[test]
+fn test_negation_pointers_and_values() {
+    let bitset = BitSet::from_u64(0xDEAD_BEEF_CAFE_BABE);
+
+    assert_eq!(!bitset, !&bitset);
+}
+
