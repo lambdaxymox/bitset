@@ -24,14 +24,14 @@ extern crate bitset;
 **bitset** is a library adds the `BitSet` data type to a system. This allows
 one to use a sequence of arbitrary many bits and apply standard logic operations
 to them. One possible use case would be for tracking data dependencies between 
-subsystems in a larger software system using the bitset to track what data 
+subsystems in a larger software system using the bit set to track what data 
 components each data type has a in data-oriented design fashion. One can apply
 the standard bitwise logic operations to bit sets such as logical AND, logical 
 OR, logical XOR, SHIFT LEFT, SHIFT RIGHT, and logical NEGATION. One can also 
 query, test, set and flip individual bits.
 
 ## Limitations
-The main limitation of the bitset crate is that it only supports a bit set 
+The main limitation of the **bitset** crate is that it only supports a bit set 
 capacity of 128 bits. This is the largest possible unsigned integer that Rust's
 type systems currently allows. This limitation will be removed in the future
 when Rust gets const generics.
@@ -45,7 +45,7 @@ use core::fmt;
 use core::ops;
 
 
-/// A fixed-size sequence of N bits. Bitsets can be transformed by 
+/// A fixed-size sequence of N bits. Bit sets can be transformed by 
 /// standard logic operators and converted to and from integers.
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq, Eq, Hash)]
@@ -101,7 +101,7 @@ impl BitSet {
         }
     }
 
-    /// Construct a new bitset from an unsigned integer.
+    /// Construct a new bit set from an unsigned integer.
     ///
     /// ## Example
     ///
@@ -172,7 +172,7 @@ impl BitSet {
         self.data.count_ones() as usize
     }
 
-    /// Return the maxiumum number of bits that this bit set can hold.
+    /// Return the maximum number of bits that this bit set can hold.
     #[inline]
     pub const fn capacity(&self) -> usize {
         128
@@ -395,7 +395,7 @@ impl BitSet {
         }
     }
 
-    /// Convert a bit set to a 64-bit integer if the bitset will fit inside
+    /// Convert a bit set to a 64-bit integer if the bit set will fit inside
     /// the integer.
     ///
     /// The functions returns `None` if the index of the highest bit set the `true`
@@ -424,7 +424,7 @@ impl BitSet {
         }
     }
 
-    /// Convert a bit set to a 128-bit integer if the bitset will fit inside the integer.
+    /// Convert a bit set to a 128-bit integer if the bit set will fit inside the integer.
     ///
     /// The functions returns `None` if the index of the highest bit set the `true`
     /// exceeds the width of a `u128`.
