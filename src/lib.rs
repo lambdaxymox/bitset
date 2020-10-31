@@ -65,7 +65,7 @@ impl BitSet {
     /// let bitset = BitSet::new();
     ///
     /// for i in 0..bitset.capacity() {
-    ///     assert_eq!(bitset.test(i), Some(false))  
+    ///     assert_eq!(bitset.test(i), false); 
     /// }
     /// ```
     #[inline]
@@ -86,11 +86,11 @@ impl BitSet {
     /// #
     /// let bitset = BitSet::from_u64(0xFFFF_FFFF_FFFF_FFFF);
     /// for i in 0..64 {
-    ///     assert_eq!(bitset.test(i), Some(true));
+    ///     assert_eq!(bitset.test(i), true);
     /// }
     /// 
     /// for i in 64..bitset.capacity() {
-    ///     assert_eq!(bitset.test(i), Some(false));  
+    ///     assert_eq!(bitset.test(i), false);  
     /// }
     /// ```
     #[inline]
@@ -111,11 +111,11 @@ impl BitSet {
     /// #
     /// let bitset = BitSet::from_u128(0xFFFF_FFFF_FFFF_FFFF);
     /// for i in 0..64 {
-    ///     assert_eq!(bitset.test(i), Some(true));
+    ///     assert_eq!(bitset.test(i), true);
     /// }
     /// 
     /// for i in 64..bitset.capacity() {
-    ///     assert_eq!(bitset.test(i), Some(false));  
+    ///     assert_eq!(bitset.test(i), false);  
     /// }
     /// ```
     #[inline]
@@ -138,8 +138,11 @@ impl BitSet {
     /// # };
     /// #
     /// let bitset = BitSet::from_u64(0b0010);
-    /// assert_eq!(bitset.test(0), Some(false));
-    /// assert_eq!(bitset.test(1), Some(true));
+    ///
+    /// assert_eq!(bitset.test(0), false);
+    /// assert_eq!(bitset.test(1), true);
+    /// assert_eq!(bitset.test(2), false);
+    /// assert_eq!(bitset.test(3), false);
     /// ```
     #[inline]
     pub fn test(&self, position: usize) -> bool {
