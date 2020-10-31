@@ -369,3 +369,51 @@ fn test_bitset_set_and_get() {
     }
 }
 
+#[test]
+fn test_bitwise_and_pointers_and_values() {
+    let bitset1 = BitSet::from_u64(0xDEAD_BEEF_CAFE_BABE);
+    let bitset2 = BitSet::from_u64(0xCAFE_BABE_DEAD_BEEF);
+
+    assert_eq!(bitset1 & bitset2, &bitset1 & bitset2);
+    assert_eq!(bitset1 & bitset2, bitset1  & &bitset2);
+    assert_eq!(bitset1 & bitset2, &bitset1 & &bitset2);
+}
+
+#[test]
+fn test_bitwise_or_pointers_and_values() {
+    let bitset1 = BitSet::from_u64(0xDEAD_BEEF_CAFE_BABE);
+    let bitset2 = BitSet::from_u64(0xCAFE_BABE_DEAD_BEEF);
+
+    assert_eq!(bitset1 | bitset2, &bitset1 | bitset2);
+    assert_eq!(bitset1 | bitset2, bitset1  | &bitset2);
+    assert_eq!(bitset1 | bitset2, &bitset1 | &bitset2);
+}
+
+#[test]
+fn test_bitwise_xor_pointers_and_values() {
+    let bitset1 = BitSet::from_u64(0xDEAD_BEEF_CAFE_BABE);
+    let bitset2 = BitSet::from_u64(0xCAFE_BABE_DEAD_BEEF);
+
+    assert_eq!(bitset1 ^ bitset2, &bitset1 ^ bitset2);
+    assert_eq!(bitset1 ^ bitset2, bitset1  ^ &bitset2);
+    assert_eq!(bitset1 ^ bitset2, &bitset1 ^ &bitset2);
+}
+
+#[test]
+fn test_shl_pointers_and_values() {
+    let bitset = BitSet::from_u64(0xDEAD_BEEF_CAFE_BABE);
+
+    for i in 0..bitset.capacity() {
+        assert_eq!(bitset << i, &bitset << i);
+    }
+}
+
+#[test]
+fn test_shr_pointers_and_values() {
+    let bitset = BitSet::from_u64(0xDEAD_BEEF_CAFE_BABE);
+
+    for i in 0..bitset.capacity() {
+        assert_eq!(bitset >> i, &bitset >> i);
+    }
+}
+

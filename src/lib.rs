@@ -598,97 +598,49 @@ impl<'a, 'b> ops::BitXor<&'a BitSet> for &'b BitSet {
     }
 }
 
-impl ops::Shl<BitSet> for BitSet {
+impl ops::Shl<usize> for BitSet {
     type Output = BitSet;
 
     #[inline]
-    fn shl(self, other: BitSet) -> Self::Output {
+    fn shl(self, amount: usize) -> Self::Output {
         let mut bitset = BitSet::new();
-        bitset.data = self.data << other.data;
+        bitset.data = self.data << amount;
 
         bitset
     }
 }
 
-impl ops::Shl<&BitSet> for BitSet {
+impl ops::Shl<usize> for &BitSet {
     type Output = BitSet;
 
     #[inline]
-    fn shl(self, other: &BitSet) -> Self::Output {
+    fn shl(self, amount: usize) -> Self::Output {
         let mut bitset = BitSet::new();
-        bitset.data = self.data << other.data;
+        bitset.data = self.data << amount;
 
         bitset
     }
 }
 
-impl ops::Shl<BitSet> for &BitSet {
+impl ops::Shr<usize> for BitSet {
     type Output = BitSet;
 
     #[inline]
-    fn shl(self, other: BitSet) -> Self::Output {
+    fn shr(self, amount: usize) -> Self::Output {
         let mut bitset = BitSet::new();
-        bitset.data = self.data << other.data;
+        bitset.data = self.data >> amount;
 
         bitset
     }
 }
 
-impl<'a, 'b> ops::Shl<&'a BitSet> for &'b BitSet {
+impl ops::Shr<usize> for &BitSet {
     type Output = BitSet;
 
     #[inline]
-    fn shl(self, other: &'a BitSet) -> Self::Output {
+    fn shr(self, amount: usize) -> Self::Output {
         let mut bitset = BitSet::new();
-        bitset.data = self.data << other.data;
-
-        bitset
-    }
-}
-
-impl ops::Shr<BitSet> for BitSet {
-    type Output = BitSet;
-
-    #[inline]
-    fn shr(self, other: BitSet) -> Self::Output {
-        let mut bitset = BitSet::new();
-        bitset.data = self.data >> other.data;
-
-        bitset
-    }
-}
-
-impl ops::Shr<&BitSet> for BitSet {
-    type Output = BitSet;
-
-    #[inline]
-    fn shr(self, other: &BitSet) -> Self::Output {
-        let mut bitset = BitSet::new();
-        bitset.data = self.data >> other.data;
-
-        bitset
-    }
-}
-
-impl ops::Shr<BitSet> for &BitSet {
-    type Output = BitSet;
-
-    #[inline]
-    fn shr(self, other: BitSet) -> Self::Output {
-        let mut bitset = BitSet::new();
-        bitset.data = self.data >> other.data;
-
-        bitset
-    }
-}
-
-impl<'a, 'b> ops::Shr<&'a BitSet> for &'b BitSet {
-    type Output = BitSet;
-
-    #[inline]
-    fn shr(self, other: &'a BitSet) -> Self::Output {
-        let mut bitset = BitSet::new();
-        bitset.data = self.data >> other.data;
+        bitset.data = self.data >> amount;
 
         bitset
     }
@@ -736,31 +688,17 @@ impl ops::BitXorAssign<&BitSet> for BitSet {
     }
 }
 
-impl ops::ShlAssign<BitSet> for BitSet {
+impl ops::ShlAssign<usize> for BitSet {
     #[inline]
-    fn shl_assign(&mut self, other: BitSet) {
-        self.data <<= other.data;
+    fn shl_assign(&mut self, amount: usize) {
+        self.data <<= amount;
     }
 }
 
-impl ops::ShlAssign<&BitSet> for BitSet {
+impl ops::ShrAssign<usize> for BitSet {
     #[inline]
-    fn shl_assign(&mut self, other: &BitSet) {
-        self.data <<= other.data;
-    }
-}
-
-impl ops::ShrAssign<BitSet> for BitSet {
-    #[inline]
-    fn shr_assign(&mut self, other: BitSet) {
-        self.data >>= other.data;
-    }
-}
-
-impl ops::ShrAssign<&BitSet> for BitSet {
-    #[inline]
-    fn shr_assign(&mut self, other: &BitSet) {
-        self.data >>= other.data;
+    fn shr_assign(&mut self, amount: usize) {
+        self.data >>= amount;
     }
 }
 
