@@ -1,9 +1,9 @@
 [package]
 name = "bitset"
-version = "0.2.1"
+version = "0.2.2"
 authors = ["LambdaXymox <lambda.xymox@gmail.com>"]
 edition = "2018"
-description = "A low-dimensional linear algebra library for real-time computer graphics."
+description = "A library for working with bit sets of arbitrary length."
 categories = [
     "data-structures",
     "no_std",
