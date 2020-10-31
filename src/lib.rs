@@ -128,7 +128,7 @@ impl BitSet {
     /// Test whether the bit in the input position is set.
     ///
     /// If the position `position` exceeds the capacity of the bit set,
-    /// the function returns `None`.
+    /// the function returns `false`.
     ///
     /// ## Example
     ///
@@ -142,11 +142,11 @@ impl BitSet {
     /// assert_eq!(bitset.test(1), Some(true));
     /// ```
     #[inline]
-    pub fn test(&self, position: usize) -> Option<bool> {
+    pub fn test(&self, position: usize) -> bool {
         if position < self.capacity() {
-            Some(self.data & (1 << position) != 0)
+            self.data & (1 << position) != 0
         } else {
-            None
+            false
         }
     }
 
@@ -253,7 +253,7 @@ impl BitSet {
     ///
     /// If the bit at position `position` in the bit set is `true`, it will be
     /// set to `false`. If the bit as position `position` is set to `false`, it
-    /// will be set to `true`. 
+    /// will be set to `true`.
     ///
     /// If the bit position exceeds the capacity of the bit set, the function 
     /// returns `None`.
