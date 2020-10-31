@@ -166,6 +166,7 @@ impl BitSet {
     ///
     /// assert_eq!(bitset.count(), 16);
     /// ```
+    #[inline]
     pub fn count(&self) -> usize {
         self.data.count_ones() as usize
     }
