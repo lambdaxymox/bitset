@@ -1,3 +1,7 @@
+#![allow(clippy::redundant_field_names)]
+#![no_std]
+extern crate core;
+
 
 pub struct BitSet {
     data: u128,
