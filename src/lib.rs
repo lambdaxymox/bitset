@@ -1,4 +1,10 @@
-#![allow(clippy::redundant_field_names)]
+/*!
+# BitSet Library
+
+## Introduction
+**bitset** is a crate 
+*/
+
 #![no_std]
 extern crate core;
 
@@ -15,7 +21,7 @@ pub struct BitSet {
 }
 
 impl BitSet {
-    /// Construct a new bit set with no bits set to 1.
+    /// Construct a new bit set with all bits set to `false`.
     ///
     /// ## Example
     ///
@@ -88,6 +94,9 @@ impl BitSet {
     }
 
     /// Test whether the bit in the input position is set.
+    ///
+    /// If the position `position` exceeds the capacity of the bit set,
+    /// the function returns `None`.
     ///
     /// ## Example
     ///
@@ -212,7 +221,10 @@ impl BitSet {
     ///
     /// If the bit at position `position` in the bit set is `true`, it will be
     /// set to `false`. If the bit as position `position` is set to `false`, it
-    /// will be set to `true`.
+    /// will be set to `true`. 
+    ///
+    /// If the bit position exceeds the capacity of the bit set, the function 
+    /// returns `None`.
     ///
     /// ## Example
     ///
@@ -259,6 +271,9 @@ impl BitSet {
 
     /// Set the bit as position `position` to the value `value`.
     ///
+    /// The function returns `None` if `position` is outside the capacity of the
+    /// bit set.
+    ///
     /// ## Example
     ///
     /// ```
@@ -292,6 +307,9 @@ impl BitSet {
 
     /// Get the current value of the bit at position `position` in the bit set.
     ///
+    /// The function returns `None` if `position` is outside the capacity of the
+    /// bit set.
+    ///
     /// ## Example
     ///
     /// ```
@@ -323,6 +341,9 @@ impl BitSet {
     /// Convert a bit set to a 64-bit integer if the bitset will fit inside
     /// the integer.
     ///
+    /// The functions returns `None` if the index of the highest bit set the `true`
+    /// exceeds the width of a `u64`.
+    ///
     /// ## Example
     ///
     /// ```
@@ -347,6 +368,9 @@ impl BitSet {
     }
 
     /// Convert a bit set to a 128-bit integer if the bitset will fit inside the integer.
+    ///
+    /// The functions returns `None` if the index of the highest bit set the `true`
+    /// exceeds the width of a `u128`.
     ///
     /// ## Example
     ///
