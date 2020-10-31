@@ -37,10 +37,11 @@ type systems currently allows. This limitation will be removed in the future
 when Rust gets const generics.
 */
 
-#![no_std]
-extern crate core;
+//#![no_std]
+//extern crate core;
 
 
+use core::fmt;
 use core::ops;
 
 
@@ -351,7 +352,7 @@ impl BitSet {
             if value {
                 self.data |= mask;
             } else {
-                self.data &= mask.reverse_bits();
+                self.data &= !mask;
             }
 
             Some(())
@@ -444,6 +445,12 @@ impl BitSet {
     /// ```
     pub fn to_u128(&self) -> Option<u128> {
         Some(self.data)
+    }
+}
+
+impl fmt::Display for BitSet {
+    fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
+        write!(formatter, "BitSet [{:#X}]", self.data)
     }
 }
 

@@ -285,15 +285,27 @@ fn test_bitset_set_out_of_bounds() {
 
 #[test]
 fn test_bitset_set() {
-    let expected = BitSet::from_u64(0b0010);
-    let mut result = BitSet::from_u64(0b1101);
-    
-    result.set(0, false);
-    result.set(1, true);
-    result.set(2, false);
-    result.set(3, false);
+    let mut result = BitSet::from_u64(0b0000);
 
-    assert_eq!(result, expected);
+    result.set(0, true);
+    assert_eq!(result, BitSet::from_u64(0b0001));
+    result.set(1, true);
+    assert_eq!(result, BitSet::from_u64(0b0011));
+    result.set(2, true);
+    assert_eq!(result, BitSet::from_u64(0b0111));
+    result.set(3, true);
+    assert_eq!(result, BitSet::from_u64(0b1111));
+
+    result.set(0, false);
+    assert_eq!(result, BitSet::from_u64(0b1110));
+    /*
+    result.set(1, false);
+    assert_eq!(result, BitSet::from_u64(0b1100));
+    result.set(2, false);
+    assert_eq!(result, BitSet::from_u64(0b1000));
+    result.set(3, false);
+    assert_eq!(result, BitSet::from_u64(0b0000));
+    */
 }
 
 /// After setting a bit in a bitset with a call to the `set` function, successive
