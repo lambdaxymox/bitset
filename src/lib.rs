@@ -16,6 +16,20 @@ pub struct BitSet {
 
 impl BitSet {
     /// Construct a new bit set with no bits set to 1.
+    ///
+    /// ## Example
+    ///
+    /// ```
+    /// # use bitset::{
+    /// #     BitSet, 
+    /// # };
+    /// #
+    /// let bitset = BitSet::new();
+    ///
+    /// for i in 0..bitset.capacity() {
+    ///     assert_eq!(bitset.test(i), Some(false))  
+    /// }
+    /// ```
     #[inline]
     pub const fn new() -> BitSet {
         BitSet {
@@ -24,6 +38,23 @@ impl BitSet {
     }
 
     /// Construct a new bit set from an unsigned integer.
+    ///
+    /// ## Example
+    ///
+    /// ```
+    /// # use bitset::{
+    /// #     BitSet, 
+    /// # };
+    /// #
+    /// let bitset = BitSet::from_u64(0xFFFF_FFFF_FFFF_FFFF);
+    /// for i in 0..64 {
+    ///     assert_eq!(bitset.test(i), Some(true));
+    /// }
+    /// 
+    /// for i in 64..bitset.capacity() {
+    ///     assert_eq!(bitset.test(i), Some(false));  
+    /// }
+    /// ```
     #[inline]
     pub const fn from_u64(value: u64) -> BitSet {
         BitSet {
@@ -32,6 +63,23 @@ impl BitSet {
     }
 
     /// Construct a new bitset from an unsigned integer.
+    ///
+    /// ## Example
+    ///
+    /// ```
+    /// # use bitset::{
+    /// #     BitSet, 
+    /// # };
+    /// #
+    /// let bitset = BitSet::from_u128(0xFFFF_FFFF_FFFF_FFFF);
+    /// for i in 0..64 {
+    ///     assert_eq!(bitset.test(i), Some(true));
+    /// }
+    /// 
+    /// for i in 64..bitset.capacity() {
+    ///     assert_eq!(bitset.test(i), Some(false));  
+    /// }
+    /// ```
     #[inline]
     pub const fn from_u128(value: u128) -> BitSet {
         BitSet {
@@ -40,6 +88,18 @@ impl BitSet {
     }
 
     /// Test whether the bit in the input position is set.
+    ///
+    /// ## Example
+    ///
+    /// ```
+    /// # use bitset::{
+    /// #     BitSet, 
+    /// # };
+    /// #
+    /// let bitset = BitSet::from_u64(0b0010);
+    /// assert_eq!(bitset.test(0), Some(false));
+    /// assert_eq!(bitset.test(1), Some(true));
+    /// ```
     #[inline]
     pub fn test(&self, position: usize) -> Option<bool> {
         if position < self.capacity() {
@@ -50,6 +110,18 @@ impl BitSet {
     }
 
     /// Count up the number of bits in the bit set that are set to true.
+    ///
+    /// ## Example
+    ///
+    /// ```
+    /// # use bitset::{
+    /// #     BitSet, 
+    /// # };
+    /// #
+    /// let bitset = BitSet::from_u64(0x0000_0000_0000_FFFF);
+    ///
+    /// assert_eq!(bitset.count(), 16);
+    /// ```
     pub fn count(&self) -> usize {
         self.data.count_ones() as usize
     }
@@ -61,6 +133,15 @@ impl BitSet {
     }
 
     /// Test whether all the bits in a bit set are set to true.
+    ///
+    /// ## Example
+    ///
+    /// ```
+    /// # use bitset::{
+    /// #     BitSet, 
+    /// # };
+    /// #
+    /// 
     #[inline]
     pub fn all(&self) -> bool {
         self.data == 0xFFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_u128
@@ -73,6 +154,19 @@ impl BitSet {
     }
 
     /// Test whether any of the bits in a bit set are set to true.
+    ///
+    /// ## Example
+    ///
+    /// ```
+    /// # use bitset::{
+    /// #     BitSet, 
+    /// # };
+    /// #
+    /// let bitset1 = BitSet::new();
+    /// assert!(!bitset1.any());
+    /// let bitset2 = BitSet::from_u64(1);
+    /// assert!(bitset2.any());
+    /// ```
     #[inline]
     pub fn any(&self) -> bool {
         self.data != 0
@@ -83,6 +177,20 @@ impl BitSet {
     /// If a bit is set to `true`, it will be set to `false` after calling 
     /// `flip_all`. Similarly, if a bit is set to `false`, it will be set to `true`
     /// after calling `flip_all`.
+    ///
+    /// ## Example
+    ///
+    /// ```
+    /// # use bitset::{
+    /// #     BitSet, 
+    /// # };
+    /// #
+    /// let mut result = BitSet::from_u128(0xFFFF_0000_FFFF_0000_FFFF_0000_FFFF_0000_FFFF);
+    /// let expected   = BitSet::from_u128(0x0000_FFFF_0000_FFFF_0000_FFFF_0000_FFFF_0000);
+    /// result.flip_all();
+    ///
+    /// assert_eq!(result, expected);
+    /// ```
     pub fn flip_all(&mut self) {
         self.data ^= 0xFFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_u128;
     }
@@ -92,6 +200,19 @@ impl BitSet {
     /// If the bit at position `position` in the bit set is `true`, it will be
     /// set to `false`. If the bit as position `position` is set to `false`, it
     /// will be set to `true`.
+    ///
+    /// ## Example
+    ///
+    /// ```
+    /// # use bitset::{
+    /// #     BitSet, 
+    /// # };
+    /// #
+    /// let mut bitset = BitSet::new();
+    /// assert_eq!(bitset.get(3), Some(false));
+    /// bitset.flip(3); 
+    /// assert_eq!(bitset.get(3), Some(true));
+    /// ``` 
     pub fn flip(&mut self, position: usize) -> Option<()> {
         if position < self.capacity() {
             self.data ^= 1 << position;
@@ -105,11 +226,40 @@ impl BitSet {
     
     /// Set all the bits in a bit set to `true` regardless of their current
     /// value.
+    ///
+    /// ## Example
+    ///
+    /// ```
+    /// # use bitset::{
+    /// #     BitSet,
+    /// # };
+    /// #
+    /// let mut bitset = BitSet::new();
+    /// assert!(bitset.none());
+    /// bitset.set_all();
+    /// assert!(bitset.all());
+    /// ```
     pub fn set_all(&mut self) {
         self.data = 0xFFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_u128;
     }
 
     /// Set the bit as position `position` to the value `value`.
+    ///
+    /// ## Example
+    ///
+    /// ```
+    /// # use bitset::{
+    /// #     BitSet,  
+    /// # };
+    /// #
+    /// let mut bitset = BitSet::new();
+    /// bitset.set(1, true);
+    /// assert_eq!(bitset.get(1), Some(true));
+    /// bitset.set(1, true);
+    /// assert_eq!(bitset.get(1), Some(true));
+    /// bitset.set(1, false);
+    /// assert_eq!(bitset.get(1), Some(false));
+    /// ```
     pub fn set(&mut self, position: usize, value: bool) -> Option<()> {
         if position < self.capacity()  {
             let mask: u128 = 1 << position;
@@ -127,20 +277,53 @@ impl BitSet {
     }
 
     /// Get the current value of the bit at position `position` in the bit set.
-    pub fn get(&self, position: usize) -> bool {
+    ///
+    /// ## Example
+    ///
+    /// ```
+    /// # use bitset::{
+    /// #     BitSet,      
+    /// # };
+    /// #
+    /// let bitset = BitSet::from_u64(0b110);
+    /// assert_eq!(bitset.get(0), Some(false));
+    /// assert_eq!(bitset.get(1), Some(true));
+    /// assert_eq!(bitset.get(2), Some(true));
+    /// assert_eq!(bitset.get(3), Some(false));
+    /// 
+    /// // Return none if the position exceeds the capacity of the bitset.
+    /// assert_eq!(bitset.get(bitset.capacity(), None));
+    /// ```
+    pub fn get(&self, position: usize) -> Option<bool> {
         if position < self.capacity() {
             if (self.data & (1 << position) ) != 0 {
-                true
+                Some(true)
             } else {
-                false
+                Some(false)
             }
         } else {
-            false
+            None
         }
     }
 
     /// Convert a bit set to a 64-bit integer if the bitset will fit inside
     /// the integer.
+    ///
+    /// ## Example
+    ///
+    /// ```
+    /// # use bitset::{
+    /// #     BitSet, 
+    /// # };
+    /// #
+    /// // A bitset that will not fit in a u64.
+    /// let bitset1 = BitSet::from_u128(0x0000_0000_0000_0001_0FFF_FFFF_FFFF_FFFF);
+    /// assert!(bitset1.to_u64().is_none());
+    ///
+    /// // A bitset that will fit inside a u64.
+    /// let bitset2 = BitSet::from_u128(0x0000_0000_0000_0000_0FFF_FFFF_FFFF_FFFF);
+    /// assert_eq!(bitset2.to_u64(), Some(0x0FFF_FFFF_FFFF_FFFF));
+    /// ```
     pub fn to_u64(&self) -> Option<u64> {
         if (self.data & (0xFFFF_FFFF_FFFF_FFFF_u128 << 64)) == 0 {
             Some(self.data as u64)
@@ -150,6 +333,21 @@ impl BitSet {
     }
 
     /// Convert a bit set to a 128-bit integer if the bitset will fit inside the integer.
+    ///
+    /// ## Example
+    ///
+    /// ```
+    /// # use bitset::{
+    /// #     BitSet, 
+    /// # };
+    /// #
+    /// let data: u64 = 0xDEAD_BEEF_DEAD_BEEF;
+    /// let bitset = BitSet::from_u64(data);
+    /// let expected = Some(data as u128);
+    /// let result = bitset.to_u128();
+    ///
+    /// assert_eq!(result, expected);
+    /// ```
     pub fn to_u128(&self) -> Option<u128> {
         Some(self.data)
     }
