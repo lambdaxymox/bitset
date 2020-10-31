@@ -148,6 +148,18 @@ impl BitSet {
     }
 
     /// Test whether none of the bits in a bit set are set to true.
+    ///
+    /// ## Example
+    ///
+    /// ```
+    /// # use bitset::{
+    /// #     BitSet, 
+    /// # };
+    /// #
+    /// let bitset = BitSet::new();
+    /// 
+    /// assert!(bitset.none());
+    /// ```
     #[inline]
     pub fn none(&self) -> bool {
         self.data == 0
@@ -191,6 +203,7 @@ impl BitSet {
     ///
     /// assert_eq!(result, expected);
     /// ```
+    #[inline]
     pub fn flip_all(&mut self) {
         self.data ^= 0xFFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_u128;
     }
@@ -239,6 +252,7 @@ impl BitSet {
     /// bitset.set_all();
     /// assert!(bitset.all());
     /// ```
+    #[inline]
     pub fn set_all(&mut self) {
         self.data = 0xFFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_u128;
     }
