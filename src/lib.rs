@@ -83,6 +83,18 @@ impl BitSet {
 
     }
 
+    pub fn get(&self, position: usize) -> bool {
+        if position < self.capacity() {
+            if (self.data & (1 << position) ) != 0 {
+                true
+            } else {
+                false
+            }
+        } else {
+            false
+        }
+    }
+
     pub fn to_u64(&self) -> Option<u64> {
         if (self.data & (0xFFFF_FFFF_FFFF_FFFF_u128 << 64)) == 0 {
             Some(self.data as u64)
@@ -95,3 +107,4 @@ impl BitSet {
         Some(self.data)
     }
 }
+
