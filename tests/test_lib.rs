@@ -423,6 +423,31 @@ fn test_bitset_not_pointers_and_values() {
 }
 
 #[test]
+fn test_bitset_not1() {
+    let bitset = BitSet::from_u128(0x0000_0000_0000_0000_F0F0_F0F0_F0F0_F0F0);
+    let expected = BitSet::from_u128(0xFFFF_FFFF_FFFF_FFFF_0F0F_0F0F_0F0F_0F0F);
+    let result = !bitset;
+
+    assert_eq!(result, expected);
+}
+
+#[test]
+fn test_bitset_not2() {
+    let bitset = BitSet::from_u128(0x0000_0000_0000_0000_0000_0000_0000_0000);
+    let expected = BitSet::from_u128(0xFFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF);
+    let result = !bitset;
+
+    assert_eq!(result, expected);
+}
+
+#[test]
+fn test_bitset_not_not() {
+    let bitset = BitSet::from_u64(0);
+
+    assert_eq!(!(!bitset), bitset);
+}
+
+#[test]
 fn test_bitset_bitwise_and1() {
     let bitset1 = BitSet::from_u64(0xDEAD_BEEF);
     let bitset2 = BitSet::from_u64(0xDEA0_0EEF);
