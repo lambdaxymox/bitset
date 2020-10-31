@@ -298,14 +298,12 @@ fn test_bitset_set() {
 
     result.set(0, false);
     assert_eq!(result, BitSet::from_u64(0b1110));
-    /*
     result.set(1, false);
     assert_eq!(result, BitSet::from_u64(0b1100));
     result.set(2, false);
     assert_eq!(result, BitSet::from_u64(0b1000));
     result.set(3, false);
     assert_eq!(result, BitSet::from_u64(0b0000));
-    */
 }
 
 /// After setting a bit in a bitset with a call to the `set` function, successive
