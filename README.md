@@ -9,7 +9,7 @@ To use the library as a dependency in your project, Add **bitset** to your
 
 ```ignore
 [dependencies]
-bitset = "0.2.0"
+bitset = "0.2.1"
 ```
 
 After that, place the crate declaration in your project's `main.rs` 

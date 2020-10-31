@@ -1,6 +1,6 @@
 [package]
 name = "bitset"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["LambdaXymox <lambda.xymox@gmail.com>"]
 edition = "2018"
 description = "A low-dimensional linear algebra library for real-time computer graphics."
