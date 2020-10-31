@@ -273,3 +273,87 @@ fn test_bitset_reset_all2() {
     bitset.reset_all();
     assert!(bitset.none());
 }
+
+#[test]
+fn test_bitset_set_out_of_bounds() {
+    let data = 0b1101;
+    let mut bitset = BitSet::from_u64(data);
+    let result = bitset.set(bitset.capacity(), true);
+
+    assert!(result.is_none());
+}
+
+#[test]
+fn test_bitset_set() {
+    let expected = BitSet::from_u64(0b0010);
+    let mut result = BitSet::from_u64(0b1101);
+    
+    result.set(0, false);
+    result.set(1, true);
+    result.set(2, false);
+    result.set(3, false);
+
+    assert_eq!(result, expected);
+}
+
+/// After setting a bit in a bitset with a call to the `set` function, successive
+/// called to `set` on the same bit with the same value should not change the 
+/// value of that bit until it is set to a new value.
+#[test]
+fn test_bitset_set_bit_twice() {
+    let mut bitset = BitSet::from_u64(0b1101);
+
+    assert!(!bitset.test(1));
+    bitset.set(1, true);
+    assert!(bitset.test(1));
+    bitset.set(1, true);
+    assert!(bitset.test(1));
+
+    bitset.set(1, false);
+    assert!(!bitset.test(1));
+    bitset.set(1, false);
+    assert!(!bitset.test(1));
+}
+
+#[test]
+fn test_bitset_get_out_of_bounds() {
+    let bitset = BitSet::from_u64(0b1101);
+
+    assert!(bitset.get(bitset.capacity()).is_none());
+}
+
+#[test]
+fn test_bitset_get1() {
+    let bitset = BitSet::from_u64(0b1101);
+
+    assert_eq!(bitset.get(0), Some(true));
+    assert_eq!(bitset.get(1), Some(false));
+    assert_eq!(bitset.get(2), Some(true));
+    assert_eq!(bitset.get(3), Some(true));
+}
+
+#[test]
+fn test_bitset_get2() {
+    let bitset = BitSet::from_u64(0b1101);
+
+    for i in 4..bitset.capacity() {
+        assert_eq!(bitset.get(i), Some(false));
+    }
+}
+
+#[test]
+fn test_bitset_set_and_get() {
+    let mut bitset = BitSet::from_u64(0xDEAD_BEEF_DEAD_BEEF);
+
+    for i in 0..bitset.capacity() {
+        bitset.set(i, true);
+        assert_eq!(bitset.get(i), Some(true));
+        bitset.set(i, true);
+        assert_eq!(bitset.get(i), Some(true));
+        bitset.set(i, false);
+        assert_eq!(bitset.get(i), Some(false));
+        bitset.set(i, false);
+        assert_eq!(bitset.get(i), Some(false));
+    }
+}
+
