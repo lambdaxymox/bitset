@@ -197,8 +197,8 @@ impl BitSet {
     /// #     BitSet, 
     /// # };
     /// #
-    /// let mut result = BitSet::from_u128(0xFFFF_0000_FFFF_0000_FFFF_0000_FFFF_0000_FFFF);
-    /// let expected   = BitSet::from_u128(0x0000_FFFF_0000_FFFF_0000_FFFF_0000_FFFF_0000);
+    /// let mut result = BitSet::from_u128(0xFFFF_0000_FFFF_0000_FFFF_0000_FFFF_0000);
+    /// let expected   = BitSet::from_u128(0x0000_FFFF_0000_FFFF_0000_FFFF_0000_FFFF);
     /// result.flip_all();
     ///
     /// assert_eq!(result, expected);
@@ -296,7 +296,7 @@ impl BitSet {
     ///
     /// ```
     /// # use bitset::{
-    /// #     BitSet,      
+    /// #     BitSet,   
     /// # };
     /// #
     /// let bitset = BitSet::from_u64(0b110);
@@ -306,7 +306,7 @@ impl BitSet {
     /// assert_eq!(bitset.get(3), Some(false));
     /// 
     /// // Return none if the position exceeds the capacity of the bitset.
-    /// assert_eq!(bitset.get(bitset.capacity(), None));
+    /// assert_eq!(bitset.get(bitset.capacity()), None);
     /// ```
     pub fn get(&self, position: usize) -> Option<bool> {
         if position < self.capacity() {
