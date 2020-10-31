@@ -424,3 +424,100 @@ fn test_negation_pointers_and_values() {
     assert_eq!(!bitset, !&bitset);
 }
 
+#[test]
+fn test_bitwise_and1() {
+    let bitset1 = BitSet::from_u64(0xDEAD_BEEF);
+    let bitset2 = BitSet::from_u64(0xDEA0_0EEF);
+    let expected = BitSet::from_u64(0xDEA0_0EEF);
+    let result = bitset1 & bitset2;
+
+    assert_eq!(result, expected);
+}
+
+#[test]
+fn test_bitwise_and2() {
+    let bitset1 = BitSet::from_u64(0xF0F0_FF0F);
+    let bitset2 = BitSet::from_u64(0xFFFF_F0F0);
+    let expected = BitSet::from_u64(0xF0F0_F000);
+    let result = bitset1 & bitset2;
+
+    assert_eq!(result, expected);
+}
+
+#[test]
+fn test_bitset_and_bitset_is_bitset() {
+    let bitset = BitSet::from_u64(0xDEAF_BEEF);
+    let result = bitset & bitset;
+    let expected = bitset;
+
+    assert_eq!(result, expected);
+}
+
+#[test]
+fn test_bitwise_or1() {
+    let bitset1 = BitSet::from_u64(0x0000_0000);
+    let bitset2 = BitSet::from_u64(0x0000_BEEF);
+    let expected = BitSet::from_u64(0x0000_BEEF);
+    let result = bitset1 | bitset2;
+
+    assert_eq!(result, expected);
+}
+
+#[test]
+fn test_bitwise_or2() {
+    let bitset1 = BitSet::from_u64(0xF0F0_FF0F);
+    let bitset2 = BitSet::from_u64(0x000F_0000);
+    let expected = BitSet::from_u64(0xF0FF_FF0F);
+    let result = bitset1 | bitset2;
+
+    assert_eq!(result, expected);
+}
+
+#[test]
+fn test_bitwise_or3() {
+    let bitset1 = BitSet::from_u64(0xDEAD_0000);
+    let bitset2 = BitSet::from_u64(0x0000_BEEF);
+    let expected = BitSet::from_u64(0xDEAD_BEEF);
+    let result = bitset1 | bitset2;
+
+    assert_eq!(result, expected);
+}
+
+#[test]
+fn test_bitset_or_bitset_is_bitset() {
+    let bitset = BitSet::from_u64(0xDEAF_BEEF);
+    let result = bitset | bitset;
+    let expected = bitset;
+
+    assert_eq!(result, expected);
+}
+
+#[test]
+fn test_bitwise_xor1() {
+    let bitset1 = BitSet::from_u64(0xDEAD_0000);
+    let bitset2 = BitSet::from_u64(0x0000_BEEF);
+    let expected = BitSet::from_u64(0xDEAD_BEEF);
+    let result = bitset1 ^ bitset2;
+
+    assert_eq!(result, expected);
+}
+
+#[test]
+fn test_bitwise_xor2() {
+    let bitset1 = BitSet::from_u64(0xDEAD_BEEF);
+    let bitset2 = BitSet::from_u64(0xCAFE_BABE);
+    let expected = BitSet::from_u64(0x1453_0451);
+    let result = bitset1 ^ bitset2;
+
+    assert_eq!(result, expected);
+}
+
+#[test]
+fn test_bitset_xor_bitset_is_zero() {
+    let bitset1 = BitSet::from_u64(0xDEAD_BEEF);
+    let bitset2 = BitSet::from_u64(0xDEAD_BEEF);
+    let expected = BitSet::from_u64(0x0000_0000);
+    let result = bitset1 ^ bitset2;
+
+    assert_eq!(result, expected);
+}
