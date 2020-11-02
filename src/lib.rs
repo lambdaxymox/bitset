@@ -37,12 +37,8 @@ type systems currently allows. This limitation will be removed in the future
 when Rust gets const generics.
 */
 
-//#![no_std]
-//extern crate core;
-
-
-use core::fmt;
-use core::ops;
+use std::fmt;
+use std::ops;
 
 
 /// A fixed-size sequence of N bits. Bit sets can be transformed by 
@@ -445,6 +441,38 @@ impl BitSet {
     /// ```
     pub fn to_u128(&self) -> Option<u128> {
         Some(self.data)
+    }
+
+    /// Convert a bit set to a string of ones and zeros.
+    ///
+    /// ## Example
+    ///
+    /// ```
+    /// # use bitset::{
+    /// #     BitSet 
+    /// # };
+    /// #
+    /// let bitset = BitSet::from_u64(0xDEAD_BEEF);
+    /// let expected = "\
+    ///     00000000000000000000000000000000\
+    ///     00000000000000000000000000000000\
+    ///     00000000000000000000000000000000\
+    ///     11011110101011011011111011101111";
+    /// let result = bitset.as_string();
+    ///
+    /// assert_eq!(result, expected);
+    /// ```
+    pub fn as_string(&self) -> String {
+        let mut st = String::with_capacity(self.capacity());
+        for i in (0..self.capacity()).rev() {
+            if self.test(i) {
+                st.push('1');
+            } else {
+                st.push('0')
+            }
+        }
+
+        st
     }
 }
 

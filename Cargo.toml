@@ -6,13 +6,11 @@ edition = "2018"
 description = "A library for working with bit sets of arbitrary length."
 categories = [
     "data-structures",
-    "no_std",
     "bits"
 ]
 keywords = [
     "data-structures",
     "bits",
-    "no_std"
 ]
 license = "Apache-2.0 OR MIT"
 readme = "README.md"
