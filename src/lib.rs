@@ -5,7 +5,7 @@
 **bitset** is a crate introducing a data type representing sets of bits.
 
 ## Getting Started
-To use the library as a dependency in your project, Add **bitset** to your 
+To use the library as a dependency in your project, add **bitset** to your 
 `Cargo.toml` file
 
 ```ignore
@@ -32,9 +32,9 @@ query, test, set and flip individual bits.
 
 ## Limitations
 The main limitation of the **bitset** crate is that it only supports a bit set 
-capacity of 128 bits. This is the largest possible unsigned integer that Rust's
-type systems currently allows. This limitation will be removed in the future
-when Rust gets const generics.
+capacity of 128 bits. This is the largest unsigned integer that Rust currently 
+has. This limitation will be removed in the future when Rust gets const 
+generics.
 */
 
 use std::fmt;
